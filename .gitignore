@@ -1,0 +1,31 @@
+# Flutter
+dawamy_app/.dart_tool/
+dawamy_app/.packages
+dawamy_app/build/
+dawamy_app/.flutter-plugins
+dawamy_app/.flutter-plugins-dependencies
+dawamy_app/ios/Pods/
+dawamy_app/ios/.symlinks/
+dawamy_app/android/.gradle/
+dawamy_app/android/app/build/
+dawamy_app/android/local.properties
+dawamy_app/coverage/
+
+# Node.js Backend
+backend/node_modules/
+backend/.env
+backend/data/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+*.env.local
