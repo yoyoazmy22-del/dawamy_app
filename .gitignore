@@ -26,6 +26,20 @@ backend/data/
 .DS_Store
 Thumbs.db
 
+# Generated platforms (not needed)
+dawamy_app/linux/
+dawamy_app/macos/
+dawamy_app/windows/
+
+# Build reports
+dawamy_app/android/build/reports/
+
+# Kotlin sessions
+dawamy_app/android/.kotlin/
+
+# QR codes
+qr_code.png
+
 # Environment
 .env
 *.env.local
