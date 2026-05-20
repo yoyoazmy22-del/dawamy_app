@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,11 +24,23 @@ void main() async {
     ),
   );
 
-  await Hive.initFlutter();
-  await Hive.openBox(AppConstants.hiveBoxName);
-  await Hive.openBox(AppConstants.hivePreferencesBox);
-  await Hive.openBox(AppConstants.hiveShiftsBox);
-  await Hive.openBox(AppConstants.hiveCalendarBox);
+  try {
+    if (kIsWeb) {
+      // Hive uses IndexedDB on web automatically
+      await Hive.openBox(AppConstants.hiveBoxName);
+      await Hive.openBox(AppConstants.hivePreferencesBox);
+      await Hive.openBox(AppConstants.hiveShiftsBox);
+      await Hive.openBox(AppConstants.hiveCalendarBox);
+    } else {
+      await Hive.initFlutter();
+      await Hive.openBox(AppConstants.hiveBoxName);
+      await Hive.openBox(AppConstants.hivePreferencesBox);
+      await Hive.openBox(AppConstants.hiveShiftsBox);
+      await Hive.openBox(AppConstants.hiveCalendarBox);
+    }
+  } catch (e) {
+    debugPrint('Hive init skipped on this platform: $e');
+  }
 
   try {
     await Firebase.initializeApp();
