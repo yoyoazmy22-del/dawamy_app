@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../calendar/domain/repositories/calendar_repository.dart';
 import '../../../calendar/domain/models/month_data.dart';
 import '../../../calendar/domain/models/day_data.dart';
+import '../../../calendar/domain/models/shift.dart';
 import '../datasources/local_calendar_datasource.dart';
 import '../datasources/remote_calendar_datasource.dart';
 import '../../../../services/http_service.dart';
@@ -43,10 +44,29 @@ class CalendarRepositoryImpl implements CalendarRepository {
   Future<void> saveMonthData(MonthData monthData) async => _local.saveMonthData(monthData);
 
   @override
-  Future<void> updateShiftForDay(DateTime date, String shiftId) async {}
+  Future<void> updateShiftForDay(DateTime date, String shiftId) async {
+    final existing = await _local.getDayData(date);
+    final shift = Shift(
+      id: shiftId,
+      type: ShiftTypeEnum.morning,
+      date: date,
+      startTime: DateTime(date.year, date.month, date.day, 8, 0),
+      endTime: DateTime(date.year, date.month, date.day, 16, 0),
+    );
+    await _local.saveDayData(
+      (existing ?? DayData(date: date, isToday: _isToday(date)))
+          .copyWith(shift: shift, isOffDay: false),
+    );
+  }
 
   @override
-  Future<void> markDayOff(DateTime date) async {}
+  Future<void> markDayOff(DateTime date) async {
+    final existing = await _local.getDayData(date);
+    await _local.saveDayData(
+      (existing ?? DayData(date: date, isToday: _isToday(date)))
+          .copyWith(shift: null, isOffDay: true),
+    );
+  }
 
   @override
   Future<List<MonthData>> getAllMonths() async => _local.getAllMonths();

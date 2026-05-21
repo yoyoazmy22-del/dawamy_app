@@ -41,10 +41,32 @@ class ShiftRepositoryImpl implements ShiftRepository {
   }
 
   @override
-  Future<void> removePattern(String configId, String patternId) async {}
+  Future<void> removePattern(String configId, String patternId) async {
+    final allConfigs = await _local.getAllConfigs();
+    final idx = allConfigs.indexWhere((c) => c.id == configId);
+    if (idx == -1) return;
+    final config = allConfigs[idx];
+    final updated = config.copyWith(
+      patterns: config.patterns.where((p) => p.id != patternId).toList(),
+      updatedAt: DateTime.now(),
+    );
+    await _local.saveConfigForMonth(updated);
+  }
 
   @override
-  Future<void> overrideDay(String configId, DateTime date) async {}
+  Future<void> overrideDay(String configId, DateTime date) async {
+    final allConfigs = await _local.getAllConfigs();
+    final idx = allConfigs.indexWhere((c) => c.id == configId);
+    if (idx == -1) return;
+    final config = allConfigs[idx];
+    final dateStr = '${date.year}-${date.month}-${date.day}';
+    if (config.overriddenDayIds.contains(dateStr)) return;
+    final updated = config.copyWith(
+      overriddenDayIds: [...config.overriddenDayIds, dateStr],
+      updatedAt: DateTime.now(),
+    );
+    await _local.saveConfigForMonth(updated);
+  }
 }
 
 final shiftRepositoryProvider = Provider<ShiftRepository>((ref) {

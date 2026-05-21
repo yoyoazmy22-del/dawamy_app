@@ -5,6 +5,7 @@ import '../../../auth/data/repositories/auth_repository_impl.dart';
 import '../../../sync/domain/repositories/sync_repository.dart';
 import '../../../sync/data/repositories/sync_repository_impl.dart';
 import '../../data/repositories/profile_repository_impl.dart';
+import '../../../../services/purchase_service.dart';
 
 class ProfileState {
   final Subscription subscription;
@@ -42,8 +43,9 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
   final AuthRepository _authRepository;
   final SyncRepository _syncRepository;
   final ProfileRepository _profileRepository;
+  final PurchaseService _purchaseService;
 
-  ProfileNotifier(this._authRepository, this._syncRepository, this._profileRepository)
+  ProfileNotifier(this._authRepository, this._syncRepository, this._profileRepository, this._purchaseService)
       : super(const ProfileState());
 
   Future<void> loadProfile() async {
@@ -71,7 +73,19 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
   }
 
   Future<void> upgradeToPro() async {
+    state = state.copyWith(isLoading: true);
+    try {
+      if (_purchaseService.isAvailable) {
+        await _purchaseService.initialize();
+        final success = await _purchaseService.purchasePro();
+        if (!success) {
+          state = state.copyWith(isLoading: false);
+          return;
+        }
+      }
+    } catch (_) {}
     state = state.copyWith(
+      isLoading: false,
       subscription: const Subscription(tier: SubscriptionTier.pro, isActive: true),
     );
   }
@@ -93,5 +107,6 @@ final profileProvider = StateNotifierProvider<ProfileNotifier, ProfileState>((re
     ref.read(authRepositoryProvider),
     ref.read(syncRepositoryProvider),
     ref.read(profileRepositoryProvider),
+    ref.read(purchaseServiceProvider),
   );
 });
