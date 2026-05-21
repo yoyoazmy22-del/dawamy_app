@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "594652715215",
+    "project_id": "dawamy-8c61c",
+    "storage_bucket": "dawamy-8c61c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594652715215:android:bdb5529f844f233cafbfba",
+        "android_client_info": {
+          "package_name": "com.dawamy.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnrIgqJ4qJBCLbiR0v4hYqDQyCAIr_PRY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
