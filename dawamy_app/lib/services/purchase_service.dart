@@ -31,8 +31,9 @@ class PurchaseService {
     if (!_initialized) return false;
     final details = await getProductDetails();
     if (details == null) return false;
-    final param = PurchaseParam(productDetails: details);
-    await _inAppPurchase.buyNonConsumable(param: param);
+    await _inAppPurchase.buyNonConsumable(
+      purchaseParam: PurchaseParam(productDetails: details),
+    );
     return true;
   }
 

@@ -51,7 +51,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   }
 
   Widget _buildHeader(BuildContext context, CalendarState state) {
-    final theme = Theme.of(context);
+    final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         AppConstants.defaultPadding,
@@ -61,45 +61,70 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Calendar',
-                style: AppTypography.displaySmall.copyWith(
-                  fontWeight: FontWeight.w700,
+                style: AppTypography.displayMedium.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: cs.onSurface,
                 ),
               ),
-              const SizedBox(height: 4),
-              Text(
-                'Manage your shifts',
-                style: AppTypography.bodyMedium.copyWith(
-                  color: theme.colorScheme.onSurface.withOpacity(0.5),
-                ),
+              const SizedBox(height: 2),
+              Row(
+                children: [
+                  Icon(Icons.date_range_rounded,
+                    size: 14, color: cs.onSurface.withOpacity(0.4)),
+                  const SizedBox(width: 4),
+                  Text(
+                    'Manage your shifts',
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: cs.onSurface.withOpacity(0.5),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: BoxDecoration(
-              color: theme.colorScheme.primary.withOpacity(0.1),
+              gradient: LinearGradient(
+                colors: [
+                  cs.primary.withOpacity(0.12),
+                  cs.primary.withOpacity(0.05),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: theme.colorScheme.primary.withOpacity(0.2),
+                color: cs.primary.withOpacity(0.15),
+                width: 1,
               ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  width: 6,
-                  height: 6,
+                  width: 7,
+                  height: 7,
                   decoration: BoxDecoration(
                     color: (state.monthData?.totalOvertimeHours ?? 0) > 0
                         ? const Color(0xFF00B894)
                         : const Color(0xFFFDCB6E),
                     shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: ((state.monthData?.totalOvertimeHours ?? 0) > 0
+                            ? const Color(0xFF00B894)
+                            : const Color(0xFFFDCB6E)).withOpacity(0.4),
+                        blurRadius: 4,
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(width: 6),
@@ -108,7 +133,8 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                       ? '${state.monthData!.workDays}D / ${state.monthData!.offDays}O'
                       : 'Free Plan',
                   style: AppTypography.labelMedium.copyWith(
-                    color: theme.colorScheme.primary,
+                    color: cs.primary,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],

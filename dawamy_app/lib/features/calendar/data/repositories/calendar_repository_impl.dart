@@ -46,12 +46,15 @@ class CalendarRepositoryImpl implements CalendarRepository {
   @override
   Future<void> updateShiftForDay(DateTime date, String shiftId) async {
     final existing = await _local.getDayData(date);
+    final now = DateTime.now();
     final shift = Shift(
       id: shiftId,
       type: ShiftTypeEnum.morning,
       date: date,
-      startTime: DateTime(date.year, date.month, date.day, 8, 0),
-      endTime: DateTime(date.year, date.month, date.day, 16, 0),
+      startTime: '08:00',
+      endTime: '16:00',
+      createdAt: now,
+      updatedAt: now,
     );
     await _local.saveDayData(
       (existing ?? DayData(date: date, isToday: _isToday(date)))
