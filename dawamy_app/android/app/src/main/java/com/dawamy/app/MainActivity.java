@@ -1,4 +1,4 @@
-package com.dawamy.dawamy_app;
+package com.dawamy.app;
 
 import io.flutter.embedding.android.FlutterActivity;
 
