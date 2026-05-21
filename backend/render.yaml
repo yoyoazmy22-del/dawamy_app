@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: dawamy-backend
+    env: node
+    region: frankfurt
+    plan: free
+    buildCommand: npm install
+    startCommand: node src/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ALLOWED_ORIGINS
+        value: https://dawamy-app.vercel.app,http://localhost:4173,http://localhost:3000
+      - key: DB_PATH
+        value: /data/db.json
