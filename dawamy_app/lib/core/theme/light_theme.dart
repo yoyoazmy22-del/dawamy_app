@@ -94,7 +94,7 @@ ThemeData get lightTheme {
       labelSmall: AppTypography.labelSmall,
     ),
 
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: LightThemeColors.card,
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -219,7 +219,7 @@ ThemeData get lightTheme {
       ),
     ),
 
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: LightThemeColors.surface,
       elevation: 0,
       shape: RoundedRectangleBorder(

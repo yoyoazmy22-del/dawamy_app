@@ -94,7 +94,7 @@ ThemeData get darkTheme {
       labelSmall: AppTypography.labelSmall,
     ),
 
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: DarkThemeColors.card,
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -219,7 +219,7 @@ ThemeData get darkTheme {
       ),
     ),
 
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: DarkThemeColors.surface,
       elevation: 0,
       shape: RoundedRectangleBorder(
