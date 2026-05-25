@@ -46,7 +46,7 @@ dependencies:
   ionicons: ^0.2.2
 
   # Utilities
-  intl: ^0.19.0
+  intl: ^0.20.2
   uuid: ^4.2.1
   connectivity_plus: ^5.0.2
   url_launcher: ^6.2.2
