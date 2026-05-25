@@ -43,3 +43,5 @@ qr_code.png
 # Environment
 .env
 *.env.local
+
+app-debug.apk
