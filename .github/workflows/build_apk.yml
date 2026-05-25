@@ -10,10 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.22.3"
+          channel: stable
           cache: true
       - name: Install deps
         working-directory: dawamy_app
@@ -26,3 +31,4 @@ jobs:
         with:
           name: dawamy-debug-apk
           path: dawamy_app/build/app/outputs/flutter-apk/*.apk
+          compression-level: 0
